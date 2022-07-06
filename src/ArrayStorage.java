@@ -6,16 +6,18 @@ import java.util.Arrays;
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
     int count = 0;
-     void clear() {
+
+
+    void clear() {
         for (int i = 0; i < count; i++) {
             storage[i] = null;
         }
-        count = size();
+        count = 0;
     }
 
     void save(Resume r) {
         storage[count] = r;
-        count = size();
+        count++;
     }
 
     Resume get(String uuid) {
@@ -35,7 +37,7 @@ public class ArrayStorage {
         if (index != -1) {
             System.arraycopy(storage, index + 1, storage, index, size() - index);
         }
-        count = size();
+        count--;
     }
 
     /**
@@ -46,16 +48,6 @@ public class ArrayStorage {
     }
 
     int size() {
-        return calculatedSize();
-    }
-
-    private int calculatedSize() {
-        int cnt = 0;
-        for (Resume resume : storage
-        ) {
-            if (resume != null)
-                cnt++;
-        }
-        return cnt;
+        return count;
     }
 }
