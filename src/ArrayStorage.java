@@ -7,7 +7,6 @@ public class ArrayStorage {
     Resume[] storage = new Resume[10000];
     int count = 0;
 
-
     void clear() {
         for (int i = 0; i < count; i++) {
             storage[i] = null;
@@ -35,9 +34,9 @@ public class ArrayStorage {
             }
         }
         if (index != -1) {
-            System.arraycopy(storage, index + 1, storage, index, size() - index);
+            System.arraycopy(storage, index + 1, storage, index, count - index);
+            count--;
         }
-        count--;
     }
 
     /**
