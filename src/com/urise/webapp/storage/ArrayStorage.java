@@ -8,9 +8,9 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private static final int storage_limit = 10000;
+    private final Resume[] storage = new Resume[storage_limit];
     private int size = 0;
-    private int index;
 
     public void clear() {
         Arrays.fill(storage, null);
@@ -18,34 +18,43 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        index = uuidInStorage(resume.getUuid(), "update");
-        if (index > -1) {
-            storage[index] = resume;
-        }
+        int index;
+        index = findIndex(resume.getUuid());
+        if (index == -1) {
+            System.out.println("Ошибка update: резюме с uuid = " + resume.getUuid() + " нет!");
+        } else storage[index] = resume;
     }
 
     public void save(Resume resume) {
-        index = uuidInStorage(resume.getUuid(), "save");
-        if (size == 10000) {
+        int index;
+        index = findIndex(resume.getUuid());
+        if (size == storage_limit) {
             System.out.println("storage переполнен, добавить резюме нельзя!");
-            return;
-        } else if (index == -1) {
+        } else if (index > -1) {
+            System.out.println("Ошибка save: резюме с uuid = " + resume.getUuid() + " уже существует!");
+        } else {
             storage[size] = resume;
             size++;
         }
     }
 
     public Resume get(String uuid) {
-        index = uuidInStorage(uuid, "get");
-        if (index > -1) {
-            return storage[index];
+        int index;
+        index = findIndex(uuid);
+        if (index == -1) {
+            System.out.println("Ошибка get: резюме с uuid = " + uuid + " нет!");
+            return null;
         }
-        return null;
+        return storage[index];
+
     }
 
     public void delete(String uuid) {
-        index = uuidInStorage(uuid, "delete");
-        if (index > -1) {
+        int index;
+        index = findIndex(uuid);
+        if (index == -1) {
+            System.out.println("Ошибка delete: резюме с uuid = " + uuid + " нет!");
+        } else {
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
@@ -63,19 +72,12 @@ public class ArrayStorage {
         return size;
     }
 
-    private int uuidInStorage(String uuid, String action) {
-        index = -1;
+    private int findIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
-                index = i;
+                return i;
             }
         }
-        if (index == -1 && (action == "get" || action == "update" || action == "delete")) {
-            System.out.println("Ошибка " + action + ": резюме с uuid = " + uuid + " нет!");
-        } else if
-        (index > -1 && action == "save") {
-            System.out.println("Ошибка " + action + ": резюме с uuid = " + uuid + " уже существует!");
-        }
-        return index;
+        return -1;
     }
 }
