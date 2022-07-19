@@ -12,8 +12,17 @@ public class ArrayStorage {
     private final Resume[] storage = new Resume[storage_limit];
     private int size = 0;
 
+    public int getSize() {
+        return size;
+    }
+
     public void clear() {
         Arrays.fill(storage, null);
+        size = 0;
+    }
+
+    public void clear(int count) {
+        Arrays.fill(storage, 0, count, null);
         size = 0;
     }
 
