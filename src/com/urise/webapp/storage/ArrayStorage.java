@@ -8,8 +8,8 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private static final int storage_limit = 10000;
-    private final Resume[] storage = new Resume[storage_limit];
+    private static final int STORAGE_LIMIT  = 10000;
+    private final Resume[] storage = new Resume[STORAGE_LIMIT ];
     private int size = 0;
 
     public int getSize() {
@@ -17,27 +17,22 @@ public class ArrayStorage {
     }
 
     public void clear() {
-        Arrays.fill(storage, null);
-        size = 0;
-    }
-
-    public void clear(int count) {
-        Arrays.fill(storage, 0, count, null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
     public void update(Resume resume) {
-        int index;
-        index = findIndex(resume.getUuid());
+        int index = findIndex(resume.getUuid());
         if (index == -1) {
             System.out.println("Ошибка update: резюме с uuid = " + resume.getUuid() + " нет!");
-        } else storage[index] = resume;
+        } else {
+            storage[index] = resume;
+        }
     }
 
     public void save(Resume resume) {
-        int index;
-        index = findIndex(resume.getUuid());
-        if (size == storage_limit) {
+        int index = findIndex(resume.getUuid());
+        if (size == STORAGE_LIMIT ) {
             System.out.println("storage переполнен, добавить резюме нельзя!");
         } else if (index > -1) {
             System.out.println("Ошибка save: резюме с uuid = " + resume.getUuid() + " уже существует!");
@@ -48,8 +43,7 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int index;
-        index = findIndex(uuid);
+        int index = findIndex(uuid);
         if (index == -1) {
             System.out.println("Ошибка get: резюме с uuid = " + uuid + " нет!");
             return null;
@@ -59,8 +53,7 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        int index;
-        index = findIndex(uuid);
+        int index = findIndex(uuid);
         if (index == -1) {
             System.out.println("Ошибка delete: резюме с uuid = " + uuid + " нет!");
         } else {
