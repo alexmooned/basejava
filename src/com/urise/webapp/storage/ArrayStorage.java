@@ -31,10 +31,9 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        int index = findIndex(resume.getUuid());
         if (size == STORAGE_LIMIT ) {
             System.out.println("storage переполнен, добавить резюме нельзя!");
-        } else if (index > -1) {
+        } else if (findIndex(resume.getUuid()) > -1) {
             System.out.println("Ошибка save: резюме с uuid = " + resume.getUuid() + " уже существует!");
         } else {
             storage[size] = resume;
