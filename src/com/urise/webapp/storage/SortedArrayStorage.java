@@ -5,21 +5,6 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
-    @Override
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-    }
-
-    @Override
-    public void update(Resume resume) {
-        int index = findIndex(resume.getUuid());
-        if (index < 0) {
-            System.out.println("Ошибка update: резюме с uuid = " + resume.getUuid() + " нет!");
-        } else {
-            storage[index] = resume;
-        }
-    }
 
     @Override
     public void save(Resume resume) {
@@ -44,11 +29,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
             System.arraycopy(storage, index + 1, storage, index, size);
             size--;
         }
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
     }
 
     @Override
