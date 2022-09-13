@@ -9,7 +9,8 @@ public class ArrayStorage extends AbstractArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    protected int findIndex(String uuid) {
+
+    protected Integer findSearchKey(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
@@ -27,4 +28,6 @@ public class ArrayStorage extends AbstractArrayStorage {
     protected void deleteResume(int index) {
         storage[index] = storage[size - 1];
     }
+
+
 }
