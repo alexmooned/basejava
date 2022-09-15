@@ -1,4 +1,4 @@
-package com.urise.webapp.storage;
+package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
 
@@ -52,6 +52,7 @@ public class MainCollections {
         }
 
         for (Map.Entry<String, Resume> entry : map.entrySet()) {
+            System.out.println(entry.getKey());
             System.out.println(entry.getValue());
         }
     }
