@@ -47,10 +47,6 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         }
     }
 
-    protected abstract void doWrite(Resume r, File file) throws IOException;
-    protected abstract Resume doRead(File file) throws IOException;
-
-
     @Override
     protected void doDelete(File file) {
         if (!file.delete()) {
@@ -97,13 +93,16 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        int cnt = 0;
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                cnt++;
-            }
+        String[] list = directory.list();
+        if (list == null) {
+            throw new StorageException("Directory read error", null);
         }
-        return cnt;
+        return list.length;
     }
+
+    protected abstract void doWrite(Resume r, File file) throws IOException;
+
+    protected abstract Resume doRead(File file) throws IOException;
+
+
 }
