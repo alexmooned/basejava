@@ -38,17 +38,18 @@ public class MainFile {
             throw new RuntimeException(e);
         }
 
-        //printFileName(dir);
+        printFileName(dir,"");
     }
 
-    public static void printFileName(File dir) {
+    public static void printFileName(File dir, String indent) {
         File[] files = dir.listFiles();
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    System.out.println(file.getName());
+                    System.out.println(indent + file.getName());
                 } else if (file.isDirectory()) {
-                    printFileName(file);
+                    System.out.println(indent + file.getName());
+                    printFileName(file, indent + " ");
                 }
             }
         }

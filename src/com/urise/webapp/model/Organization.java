@@ -2,6 +2,7 @@ package com.urise.webapp.model;
 
 import com.urise.webapp.util.DateUtil;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -11,7 +12,9 @@ import java.util.Objects;
 
 import static com.urise.webapp.util.DateUtil.NOW;
 
-public class Organization {
+public class Organization implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private List<Period> periods = new ArrayList<>();
     private final Link homePage;
 
@@ -47,7 +50,7 @@ public class Organization {
         return "Organization(" + homePage + "," + periods + ')';
     }
 
-    public static class Period {
+    public static class Period implements Serializable{
         private final LocalDate startDate;
         private final LocalDate endDate;
         private final String title;
