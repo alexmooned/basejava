@@ -75,9 +75,6 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected List<Resume> doCopyAll() {
         File[] files = getFilesList();
-        if (files == null) {
-            throw new StorageException("Directory is null", null);
-        }
         List<Resume> list = new ArrayList<>(files.length);
         for (File file : files) {
             list.add(doGet(file));
@@ -101,6 +98,10 @@ public class FileStorage extends AbstractStorage<File> {
     }
 
     private File[] getFilesList() {
-        return directory.listFiles();
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new StorageException("Directory is null", null);
+        }
+        return files;
     }
 }
