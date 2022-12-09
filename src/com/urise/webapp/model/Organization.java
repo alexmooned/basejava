@@ -1,7 +1,11 @@
 package com.urise.webapp.model;
 
 import com.urise.webapp.util.DateUtil;
+import com.urise.webapp.util.LocalDateAdapter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
@@ -12,11 +16,15 @@ import java.util.Objects;
 
 import static com.urise.webapp.util.DateUtil.NOW;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private List<Period> periods = new ArrayList<>();
-    private final Link homePage;
+    private Link homePage;
+
+    public Organization() {
+    }
 
     public Organization(String name, String url, Period... periods) {
         this(new Link(name, url), Arrays.asList(periods));
@@ -25,6 +33,10 @@ public class Organization implements Serializable {
     public Organization(Link homePage, List<Period> periods) {
         this.periods = periods;
         this.homePage = homePage;
+    }
+
+    public Link getHomePage() {
+        return homePage;
     }
 
     public List<Period> getPeriods() {
@@ -50,11 +62,17 @@ public class Organization implements Serializable {
         return "Organization(" + homePage + "," + periods + ')';
     }
 
-    public static class Period implements Serializable{
-        private final LocalDate startDate;
-        private final LocalDate endDate;
-        private final String title;
-        private final String description;
+    @XmlAccessorType(XmlAccessType.FIELD)
+    public static class Period implements Serializable {
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate startDate;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate endDate;
+        private String title;
+        private String description;
+
+        public Period() {
+        }
 
         public Period(int startYear, Month startMonth, String title, String description) {
             this(DateUtil.of(startYear, startMonth), NOW, title, description);
@@ -71,7 +89,23 @@ public class Organization implements Serializable {
             this.startDate = startDate;
             this.endDate = endDate;
             this.title = title;
-            this.description = description;
+            this.description = description == null ? "" : description;
+        }
+
+        public LocalDate getStartDate() {
+            return startDate;
+        }
+
+        public LocalDate getEndDate() {
+            return endDate;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDescription() {
+            return description;
         }
 
         @Override
