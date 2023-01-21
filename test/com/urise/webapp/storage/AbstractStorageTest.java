@@ -3,12 +3,12 @@ package com.urise.webapp.storage;
 import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.model.*;
+import com.urise.webapp.model.ContactType;
+import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -33,14 +33,14 @@ public abstract class AbstractStorageTest {
 
 
     static {
-        RESUME_1 = new Resume(UUID_1, "Name1");
-        RESUME_2 = new Resume(UUID_2, "Name2");
-        RESUME_3 = new Resume(UUID_3, "Name3");
-        RESUME_4 = new Resume(UUID_4, "Name4");
-//        RESUME_1 = ResumeTestData.getTestData(UUID_1, "Name1");
-//        RESUME_2 = ResumeTestData.getTestData(UUID_2, "Name2");
-//        RESUME_3 = ResumeTestData.getTestData(UUID_3, "Name3");
-//        RESUME_4 = ResumeTestData.getTestData(UUID_4, "Name4");
+//        RESUME_1 = new Resume(UUID_1, "Name1");
+//        RESUME_2 = new Resume(UUID_2, "Name2");
+//        RESUME_3 = new Resume(UUID_3, "Name3");
+//        RESUME_4 = new Resume(UUID_4, "Name4");
+        RESUME_1 = ResumeTestData.getTestData(UUID_1, "Name1");
+        RESUME_2 = ResumeTestData.getTestData(UUID_2, "Name2");
+        RESUME_3 = ResumeTestData.getTestData(UUID_3, "Name3");
+        RESUME_4 = ResumeTestData.getTestData(UUID_4, "Name4");
     }
 
     protected AbstractStorageTest(Storage storage) {
@@ -69,8 +69,10 @@ public abstract class AbstractStorageTest {
     @Test
     public void update() throws Exception {
         Resume updated = new Resume(UUID_3, "New Name");
+        RESUME_3.addContact(ContactType.MAIL, "mail1@google.com");
+        RESUME_3.addContact(ContactType.SKYPE, "NewSkype");
+        RESUME_3.addContact(ContactType.MOBILE, "+7 921 222-22-22");
         storage.update(updated);
-        //assertSame(updated, storage.get(UUID_3));
         assertEquals(updated, (storage.get(UUID_3)));
     }
 
@@ -144,19 +146,19 @@ public abstract class AbstractStorageTest {
 
             r.addContact(ContactType.MAIL, fullName + "mail@mail.ru");
             r.addContact(ContactType.PHONE, "11"+ uuid);
-            r.addSection(SectionType.OBJECTIVE, new TextSection("Objective" + uuid));
-            r.addSection(SectionType.PERSONAL, new TextSection("Personal data" + uuid));
-            r.addSection(SectionType.ACHIEVEMENT, new ListSection("Achivment1", "Achivment2"));
-            r.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL"));
-            r.addSection(SectionType.EXPERIENCE,
-                    new OrganizationSection(
-                            new Organization("Organization", "http://www.organization.ru",
-                                    new Organization.Period(2020, Month.JANUARY, "position1", "content1"),
-                                    new Organization.Period(2019, Month.MARCH, 2020, Month.JANUARY, "position2", "content2"))));
-            r.addSection(SectionType.EDUCATION,
-                    new OrganizationSection(
-                            new Organization("Institute", "http://www.institute.ru",
-                                    new Organization.Period(2015, Month.JANUARY, 2019, Month.DECEMBER, "aspirant", null))));
+//            r.addSection(SectionType.OBJECTIVE, new TextSection("Objective" + uuid));
+//            r.addSection(SectionType.PERSONAL, new TextSection("Personal data" + uuid));
+//            r.addSection(SectionType.ACHIEVEMENT, new ListSection("Achivment1", "Achivment2"));
+//            r.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL"));
+//            r.addSection(SectionType.EXPERIENCE,
+//                    new OrganizationSection(
+//                            new Organization("Organization", "http://www.organization.ru",
+//                                    new Organization.Period(2020, Month.JANUARY, "position1", "content1"),
+//                                    new Organization.Period(2019, Month.MARCH, 2020, Month.JANUARY, "position2", "content2"))));
+//            r.addSection(SectionType.EDUCATION,
+//                    new OrganizationSection(
+//                            new Organization("Institute", "http://www.institute.ru",
+//                                    new Organization.Period(2015, Month.JANUARY, 2019, Month.DECEMBER, "aspirant", null))));
             return r;
         }
     }
