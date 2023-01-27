@@ -3,8 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.model.ContactType;
-import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -146,10 +145,10 @@ public abstract class AbstractStorageTest {
 
             r.addContact(ContactType.MAIL, fullName + "mail@mail.ru");
             r.addContact(ContactType.PHONE, "11"+ uuid);
-//            r.addSection(SectionType.OBJECTIVE, new TextSection("Objective" + uuid));
-//            r.addSection(SectionType.PERSONAL, new TextSection("Personal data" + uuid));
-//            r.addSection(SectionType.ACHIEVEMENT, new ListSection("Achivment1", "Achivment2"));
-//            r.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL"));
+            r.addSection(SectionType.OBJECTIVE, new TextSection("Objective" + uuid));
+            r.addSection(SectionType.PERSONAL, new TextSection("Personal data" + uuid));
+            r.addSection(SectionType.ACHIEVEMENT, new ListSection("Achivment1", "Achivment2"));
+            r.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL"));
 //            r.addSection(SectionType.EXPERIENCE,
 //                    new OrganizationSection(
 //                            new Organization("Organization", "http://www.organization.ru",
