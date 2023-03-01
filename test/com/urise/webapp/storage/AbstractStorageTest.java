@@ -144,7 +144,7 @@ public abstract class AbstractStorageTest {
             Resume r = new Resume(uuid, fullName);
 
             r.addContact(ContactType.MAIL, fullName + "mail@mail.ru");
-            r.addContact(ContactType.PHONE, "11"+ uuid);
+            r.addContact(ContactType.PHONE, "111");
             r.addSection(SectionType.OBJECTIVE, new TextSection("Objective" + uuid));
             r.addSection(SectionType.PERSONAL, new TextSection("Personal data" + uuid));
             r.addSection(SectionType.ACHIEVEMENT, new ListSection("Achivment1", "Achivment2"));
